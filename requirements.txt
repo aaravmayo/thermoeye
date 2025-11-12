@@ -1,0 +1,6 @@
+flask==3.0.0
+opencv-python
+numpy
+pillow
+paho-mqtt
+werkzeug
