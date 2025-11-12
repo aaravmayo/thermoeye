@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>Alerts History - ThermoEye</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0f0f1e;
+      color: #e0e0e0;
+      min-height: 100vh;
+    }
+    
+    .header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      padding: 16px 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #ff6b35;
+    }
+    .header h1 {
+      font-size: 24px;
+      color: #ff6b35;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .user-info {
+      font-size: 14px;
+      color: #bdbdbd;
+    }
+    .btn-logout {
+      padding: 8px 16px;
+      background: #d32f2f;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    
+    .nav {
+      background: #16213e;
+      padding: 12px 24px;
+      display: flex;
+      gap: 16px;
+      border-bottom: 1px solid #2a2a3e;
+    }
+    .nav a {
+      color: #bdbdbd;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      transition: all 0.3s;
+    }
+    .nav a:hover {
+      background: #1a1a2e;
+      color: #ff6b35;
+    }
+    .nav a.active {
+      background: #ff6b35;
+      color: white;
+    }
+    
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    
+    .card {
+      background: linear-gradient(135deg, #1e1e3f 0%, #16213e 100%);
+      border-radius: 12px;
+      padding: 24px;
+      border: 1px solid #2a2a3e;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .card h2 {
+      font-size: 20px;
+      color: #ff6b35;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .alerts-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .alerts-table th {
+      background: #0f0f1e;
+      padding: 12px;
+      text-align: left;
+      font-size: 13px;
+      color: #9e9e9e;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 2px solid #2a2a3e;
+    }
+    .alerts-table td {
+      padding: 16px 12px;
+      border-bottom: 1px solid #2a2a3e;
+      font-size: 14px;
+    }
+    .alerts-table tr:hover {
+      background: rgba(255, 107, 53, 0.05);
+    }
+    
+    .alert-row {
+      animation: slideIn 0.3s ease;
+    }
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    .severity-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .severity-high {
+      background: linear-gradient(135deg, #d32f2f 0%, #f44336 100%);
+      color: white;
+    }
+    .severity-medium {
+      background: linear-gradient(135deg, #ff6f00 0%, #ff9100 100%);
+      color: white;
+    }
+    .severity-low {
+      background: linear-gradient(135deg, #fbc02d 0%, #fdd835 100%);
+      color: #333;
+    }
+    
+    .timestamp {
+      font-size: 13px;
+      color: #9e9e9e;
+    }
+    
+    .density-bar {
+      width: 100%;
+      height: 8px;
+      background: #2a2a3e;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+    .density-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #00c853, #fbc02d, #d32f2f);
+      border-radius: 4px;
+      transition: width 0.3s;
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 80px 20px;
+      color: #757575;
+    }
+    .empty-state i {
+      font-size: 64px;
+      margin-bottom: 20px;
+      opacity: 0.3;
+    }
+    
+    .stats-summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .stat-box {
+      background: #0f0f1e;
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid #2a2a3e;
+    }
+    .stat-label {
+      font-size: 12px;
+      color: #9e9e9e;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+    .stat-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: #ff6b35;
+    }
+    
+    @media (max-width: 768px) {
+      .alerts-table {
+        font-size: 12px;
+      }
+      .alerts-table th,
+      .alerts-table td {
+        padding: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>
+      <i class="fas fa-fire"></i>
+      ThermoEye Control Center
+    </h1>
+    <div class="user-menu">
+      <div class="user-info">
+        <i class="fas fa-user-circle"></i> {{ user }}
+      </div>
+      <a href="/logout">
+        <button class="btn-logout"><i class="fas fa-sign-out-alt"></i> Logout</button>
+      </a>
+    </div>
+  </div>
+  
+  <div class="nav">
+    <a href="/"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+    <a href="/streams"><i class="fas fa-video"></i> My Streams</a>
+    <a href="/alerts" class="active"><i class="fas fa-bell"></i> Alerts History</a>
+  </div>
+
+  <div class="container">
+    <div class="card">
+      <h2><i class="fas fa-exclamation-triangle"></i> Recent Alerts (Last 50)</h2>
+      
+      {% if alerts %}
+        <div class="stats-summary">
+          <div class="stat-box">
+            <div class="stat-label">Total Alerts</div>
+            <div class="stat-value">{{ alerts|length }}</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Highest Density</div>
+            <div class="stat-value">
+              {% set max_density = alerts|map(attribute='density')|max %}
+              {{ (max_density * 100)|round(1) }}%
+            </div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Peak Occupancy</div>
+            <div class="stat-value">
+              {% set max_people = alerts|map(attribute='people')|max %}
+              {{ max_people }} people
+            </div>
+          </div>
+        </div>
+        
+        <table class="alerts-table">
+          <thead>
+            <tr>
+              <th>Timestamp</th>
+              <th>Density</th>
+              <th>People</th>
+              <th>Stream</th>
+              <th>Severity</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for alert in alerts %}
+              <tr class="alert-row">
+                <td class="timestamp">
+                  <i class="fas fa-clock"></i> {{ alert.timestamp[:19].replace('T', ' ') }}
+                </td>
+                <td>
+                  <div>{{ (alert.density * 100)|round(1) }}%</div>
+                  <div class="density-bar">
+                    <div class="density-fill" style="width: {{ (alert.density * 100)|round(0) }}%"></div>
+                  </div>
+                </td>
+                <td>
+                  <i class="fas fa-users"></i> {{ alert.people }}
+                </td>
+                <td>
+                  {{ alert.stream_id or 'N/A' }}
+                </td>
+                <td>
+                  {% if alert.density >= 0.7 %}
+                    <span class="severity-badge severity-high">Critical</span>
+                  {% elif alert.density >= 0.5 %}
+                    <span class="severity-badge severity-medium">Warning</span>
+                  {% else %}
+                    <span class="severity-badge severity-low">Notice</span>
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <div class="empty-state">
+          <i class="fas fa-bell-slash"></i>
+          <h3>No alerts recorded</h3>
+          <p>Alert history will appear here when crowd density exceeds threshold</p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</body>
+</html>

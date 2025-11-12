@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>Dashboard - ThermoEye</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0f0f1e;
+      color: #e0e0e0;
+    }
+    
+    .header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      padding: 16px 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #ff6b35;
+    }
+    .header h1 {
+      font-size: 24px;
+      color: #ff6b35;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .status-badge {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      animation: pulse 2s infinite;
+    }
+    .status-running {
+      background: linear-gradient(135deg, #00c853 0%, #00e676 100%);
+      color: white;
+    }
+    .status-idle {
+      background: #424242;
+      color: #bdbdbd;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .user-info {
+      font-size: 14px;
+      color: #bdbdbd;
+    }
+    .btn-logout {
+      padding: 8px 16px;
+      background: #d32f2f;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.3s;
+    }
+    .btn-logout:hover {
+      background: #b71c1c;
+    }
+    
+    .nav {
+      background: #16213e;
+      padding: 12px 24px;
+      display: flex;
+      gap: 16px;
+      border-bottom: 1px solid #2a2a3e;
+    }
+    .nav a {
+      color: #bdbdbd;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      transition: all 0.3s;
+    }
+    .nav a:hover {
+      background: #1a1a2e;
+      color: #ff6b35;
+    }
+    .nav a.active {
+      background: #ff6b35;
+      color: white;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      padding: 24px;
+    }
+    .stat-card {
+      background: linear-gradient(135deg, #1e1e3f 0%, #16213e 100%);
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid #2a2a3e;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(255, 107, 53, 0.2);
+    }
+    .stat-label {
+      font-size: 13px;
+      color: #9e9e9e;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    .stat-value {
+      font-size: 32px;
+      font-weight: 700;
+      color: #ff6b35;
+    }
+    .stat-icon {
+      font-size: 32px;
+      opacity: 0.3;
+      float: right;
+    }
+    
+    .container {
+      display: grid;
+      grid-template-columns: 400px 1fr;
+      gap: 24px;
+      padding: 24px;
+      max-width: 1800px;
+      margin: 0 auto;
+    }
+    
+    .card {
+      background: linear-gradient(135deg, #1e1e3f 0%, #16213e 100%);
+      border-radius: 12px;
+      padding: 24px;
+      border: 1px solid #2a2a3e;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .card h2 {
+      font-size: 18px;
+      color: #ff6b35;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      font-size: 13px;
+      color: #bdbdbd;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    select, input[type="text"], input[type="file"] {
+      width: 100%;
+      padding: 12px;
+      background: #0f0f1e;
+      border: 2px solid #2a2a3e;
+      border-radius: 8px;
+      color: #e0e0e0;
+      font-size: 14px;
+      transition: border 0.3s;
+    }
+    select:focus, input[type="text"]:focus {
+      outline: none;
+      border-color: #ff6b35;
+    }
+    input[type="range"] {
+      width: 100%;
+      height: 6px;
+      background: #2a2a3e;
+      border-radius: 3px;
+      outline: none;
+      -webkit-appearance: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      background: #ff6b35;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .range-display {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 8px;
+      font-size: 13px;
+      color: #9e9e9e;
+    }
+    .range-value {
+      font-size: 16px;
+      font-weight: 600;
+      color: #ff6b35;
+    }
+    
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #00c853 0%, #00e676 100%);
+      color: white;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(0, 200, 83, 0.3);
+    }
+    .btn-danger {
+      background: linear-gradient(135deg, #d32f2f 0%, #f44336 100%);
+      color: white;
+    }
+    .btn-danger:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(211, 47, 47, 0.3);
+    }
+    .btn-secondary {
+      background: #424242;
+      color: white;
+    }
+    .btn-secondary:hover {
+      background: #616161;
+    }
+    .btn-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .btn-full {
+      width: 100%;
+    }
+    
+    .video-container {
+      position: relative;
+      background: #000;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .video-stream {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .video-overlay {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(0,0,0,0.8);
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 12px;
+    }
+    
+    .alert {
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .alert-success {
+      background: rgba(0, 200, 83, 0.2);
+      border-left: 4px solid #00c853;
+      color: #69f0ae;
+    }
+    .alert-error {
+      background: rgba(211, 47, 47, 0.2);
+      border-left: 4px solid #d32f2f;
+      color: #ff5252;
+    }
+    .alert-info {
+      background: rgba(33, 150, 243, 0.2);
+      border-left: 4px solid #2196f3;
+      color: #64b5f6;
+    }
+    
+    @media (max-width: 1200px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>
+      <i class="fas fa-fire"></i>
+      ThermoEye Control Center
+      <span class="status-badge {{ 'status-running' if running else 'status-idle' }}">
+        {{ 'Live' if running else 'Idle' }}
+      </span>
+    </h1>
+    <div class="user-menu">
+      <div class="user-info">
+        <i class="fas fa-user-circle"></i> {{ user }}
+        {% if role == 'admin' %}
+        <span style="color: #ff6b35;">(Admin)</span>
+        {% endif %}
+      </div>
+      <a href="/logout">
+        <button class="btn-logout"><i class="fas fa-sign-out-alt"></i> Logout</button>
+      </a>
+    </div>
+  </div>
+  
+  <div class="nav">
+    <a href="/" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+    <a href="/streams"><i class="fas fa-video"></i> My Streams</a>
+    <a href="/alerts"><i class="fas fa-bell"></i> Alerts History</a>
+  </div>
+  
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+      <div class="stat-label">Current Density</div>
+      <div class="stat-value" id="current-density">{{ (stats.avg_density * 100)|round(1) }}%</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon"><i class="fas fa-users"></i></div>
+      <div class="stat-label">Estimated People</div>
+      <div class="stat-value" id="people-count">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon"><i class="fas fa-chart-area"></i></div>
+      <div class="stat-label">Peak Density</div>
+      <div class="stat-value">{{ (stats.peak_density * 100)|round(1) }}%</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
+      <div class="stat-label">Total Alerts</div>
+      <div class="stat-value">{{ stats.total_alerts }}</div>
+    </div>
+  </div>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div style="padding: 0 24px;">
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">
+            <i class="fas fa-info-circle"></i> {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <div class="container">
+    <div class="card">
+      <h2><i class="fas fa-cog"></i> Stream Configuration</h2>
+      
+      <form action="/start" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+          <label>Source Type</label>
+          <select name="source_type" id="sourceType" onchange="toggleSourceFields()">
+            <option value="webcam">Webcam (Local)</option>
+            <option value="stream">Saved Stream</option>
+            <option value="url">Network Stream URL</option>
+            <option value="file">Upload Video File</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="streamSelect" style="display: none;">
+          <label>Select Stream</label>
+          <select name="stream_id">
+            <option value="">-- Choose a stream --</option>
+            {% for sid, s in streams.items() %}
+              <option value="{{ sid }}" {{ 'selected' if sid == active_stream else '' }}>
+                {{ s.name }} ({{ s.type }})
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="form-group" id="urlField" style="display: none;">
+          <label>Stream URL</label>
+          <input type="text" name="stream_url" placeholder="rtsp://192.168.1.10:554/stream1">
+        </div>
+
+        <div class="form-group" id="fileField" style="display: none;">
+          <label>Video File</label>
+          <input type="file" name="video_file" accept=".mp4,.avi,.mov,.mkv,.flv">
+        </div>
+
+        <div class="form-group">
+          <label>Alert Threshold</label>
+          <input type="range" name="threshold" min="0" max="100" value="{{ threshold }}" oninput="thrOut.value=value">
+          <div class="range-display">
+            <span>Sensitivity</span>
+            <span class="range-value"><output id="thrOut">{{ threshold }}</output>%</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Heatmap Opacity</label>
+          <input type="range" name="opacity" min="30" max="100" value="{{ opacity }}" oninput="opOut.value=value">
+          <div class="range-display">
+            <span>Visibility</span>
+            <span class="range-value"><output id="opOut">{{ opacity }}</output>%</span>
+          </div>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn btn-primary btn-full" type="submit">
+            <i class="fas fa-play"></i> Start Monitoring
+          </button>
+        </div>
+      </form>
+
+      <form action="/stop" method="post">
+        <div class="btn-group">
+          <button class="btn btn-danger btn-full" type="submit">
+            <i class="fas fa-stop"></i> Stop Stream
+          </button>
+        </div>
+      </form>
+
+      {% if running %}
+      <form action="/set_params" method="post" style="margin-top: 24px; padding-top: 24px; border-top: 1px solid #2a2a3e;">
+        <h3 style="color: #ff6b35; font-size: 16px; margin-bottom: 16px;">Live Adjustments</h3>
+        
+        <div class="form-group">
+          <label>Alert Threshold</label>
+          <input type="range" name="threshold" min="0" max="100" value="{{ threshold }}" oninput="liveThr.value=value">
+          <div class="range-display">
+            <span>Adjust</span>
+            <span class="range-value"><output id="liveThr">{{ threshold }}</output>%</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Heatmap Opacity</label>
+          <input type="range" name="opacity" min="30" max="100" value="{{ opacity }}" oninput="liveOp.value=value">
+          <div class="range-display">
+            <span>Adjust</span>
+            <span class="range-value"><output id="liveOp">{{ opacity }}</output>%</span>
+          </div>
+        </div>
+
+        <button class="btn btn-secondary btn-full" type="submit">
+          <i class="fas fa-sync"></i> Update Parameters
+        </button>
+      </form>
+      {% endif %}
+    </div>
+
+    <div class="card">
+      <h2><i class="fas fa-desktop"></i> Live Video Feed</h2>
+      <div class="video-container">
+        <img class="video-stream" src="/video_feed" alt="Video stream" />
+        {% if uptime %}
+        <div class="video-overlay">
+          <i class="fas fa-clock"></i> Uptime: {{ uptime }}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleSourceFields() {
+      const type = document.getElementById('sourceType').value;
+      document.getElementById('streamSelect').style.display = type === 'stream' ? 'block' : 'none';
+      document.getElementById('urlField').style.display = type === 'url' ? 'block' : 'none';
+      document.getElementById('fileField').style.display = type === 'file' ? 'block' : 'none';
+    }
+    
+    setInterval(async () => {
+      try {
+        const response = await fetch('/api/stats');
+        const data = await response.json();
+        document.getElementById('current-density').textContent = (data.density * 100).toFixed(1) + '%';
+        document.getElementById('people-count').textContent = data.people;
+      } catch (e) {
+        console.error('Failed to update stats:', e);
+      }
+    }, 2000);
+    
+    toggleSourceFields();
+  </script>
+</body>
+</html>

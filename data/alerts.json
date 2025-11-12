@@ -1,0 +1,602 @@
+[
+  {
+    "timestamp": "2025-11-12T11:28:49.005980",
+    "density": 0.912,
+    "people": 690,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:49.153584",
+    "density": 0.918,
+    "people": 688,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:49.301204",
+    "density": 0.922,
+    "people": 688,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:49.468137",
+    "density": 0.925,
+    "people": 690,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:49.635237",
+    "density": 0.928,
+    "people": 692,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:49.799381",
+    "density": 0.93,
+    "people": 693,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:49.972884",
+    "density": 0.932,
+    "people": 694,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:50.137753",
+    "density": 0.934,
+    "people": 694,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:50.269809",
+    "density": 0.935,
+    "people": 693,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:50.421145",
+    "density": 0.935,
+    "people": 689,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:50.574883",
+    "density": 0.934,
+    "people": 686,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:50.711804",
+    "density": 0.934,
+    "people": 685,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:50.860591",
+    "density": 0.933,
+    "people": 685,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:50.997612",
+    "density": 0.932,
+    "people": 685,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:51.138408",
+    "density": 0.932,
+    "people": 685,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:51.289913",
+    "density": 0.931,
+    "people": 684,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:51.443949",
+    "density": 0.931,
+    "people": 684,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:51.583944",
+    "density": 0.93,
+    "people": 682,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:51.727769",
+    "density": 0.929,
+    "people": 679,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:51.878199",
+    "density": 0.927,
+    "people": 676,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:52.018382",
+    "density": 0.926,
+    "people": 672,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:52.197397",
+    "density": 0.923,
+    "people": 669,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:52.387050",
+    "density": 0.92,
+    "people": 664,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:52.617081",
+    "density": 0.917,
+    "people": 660,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:52.890579",
+    "density": 0.914,
+    "people": 653,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:53.187356",
+    "density": 0.911,
+    "people": 646,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:53.483125",
+    "density": 0.906,
+    "people": 635,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:53.788743",
+    "density": 0.9,
+    "people": 612,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:54.101554",
+    "density": 0.892,
+    "people": 604,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:54.513354",
+    "density": 0.885,
+    "people": 600,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:54.904319",
+    "density": 0.877,
+    "people": 601,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:55.218258",
+    "density": 0.87,
+    "people": 603,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:55.517437",
+    "density": 0.863,
+    "people": 605,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:55.820688",
+    "density": 0.857,
+    "people": 609,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:56.156914",
+    "density": 0.851,
+    "people": 608,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:56.480953",
+    "density": 0.845,
+    "people": 606,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:56.787776",
+    "density": 0.84,
+    "people": 606,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:57.080813",
+    "density": 0.835,
+    "people": 606,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:57.378234",
+    "density": 0.83,
+    "people": 609,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:57.656674",
+    "density": 0.827,
+    "people": 611,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:57.951462",
+    "density": 0.824,
+    "people": 617,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:58.255370",
+    "density": 0.823,
+    "people": 619,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:58.553785",
+    "density": 0.824,
+    "people": 620,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:58.867766",
+    "density": 0.825,
+    "people": 623,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:59.216944",
+    "density": 0.828,
+    "people": 628,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:59.658338",
+    "density": 0.83,
+    "people": 628,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:28:59.997678",
+    "density": 0.833,
+    "people": 630,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:00.339586",
+    "density": 0.835,
+    "people": 631,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:00.635276",
+    "density": 0.837,
+    "people": 633,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:00.920311",
+    "density": 0.84,
+    "people": 636,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:01.225472",
+    "density": 0.843,
+    "people": 638,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:01.527787",
+    "density": 0.846,
+    "people": 639,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:01.818466",
+    "density": 0.849,
+    "people": 641,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:02.117259",
+    "density": 0.852,
+    "people": 644,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:02.403283",
+    "density": 0.855,
+    "people": 644,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:02.714849",
+    "density": 0.857,
+    "people": 644,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:03.005668",
+    "density": 0.859,
+    "people": 646,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:03.293392",
+    "density": 0.862,
+    "people": 646,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:03.571182",
+    "density": 0.864,
+    "people": 646,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:03.899061",
+    "density": 0.865,
+    "people": 646,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:04.289481",
+    "density": 0.867,
+    "people": 644,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:04.851562",
+    "density": 0.868,
+    "people": 646,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:05.266988",
+    "density": 0.87,
+    "people": 644,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:05.630023",
+    "density": 0.871,
+    "people": 644,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:05.996221",
+    "density": 0.871,
+    "people": 643,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:06.390075",
+    "density": 0.871,
+    "people": 640,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:06.815980",
+    "density": 0.871,
+    "people": 639,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:07.217911",
+    "density": 0.871,
+    "people": 638,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:07.630666",
+    "density": 0.87,
+    "people": 637,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:08.131896",
+    "density": 0.87,
+    "people": 636,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:08.516264",
+    "density": 0.869,
+    "people": 636,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:08.890505",
+    "density": 0.868,
+    "people": 634,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:09.341767",
+    "density": 0.866,
+    "people": 630,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:09.910995",
+    "density": 0.864,
+    "people": 624,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:10.318249",
+    "density": 0.862,
+    "people": 619,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:10.690563",
+    "density": 0.859,
+    "people": 616,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:11.074470",
+    "density": 0.856,
+    "people": 613,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:11.432727",
+    "density": 0.853,
+    "people": 610,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:11.782243",
+    "density": 0.85,
+    "people": 606,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:12.151915",
+    "density": 0.846,
+    "people": 597,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:12.536051",
+    "density": 0.841,
+    "people": 583,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:12.899890",
+    "density": 0.835,
+    "people": 573,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:13.290167",
+    "density": 0.828,
+    "people": 564,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:13.685696",
+    "density": 0.821,
+    "people": 558,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:14.170017",
+    "density": 0.815,
+    "people": 564,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:14.628880",
+    "density": 0.809,
+    "people": 566,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:15.019459",
+    "density": 0.803,
+    "people": 568,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:15.387209",
+    "density": 0.798,
+    "people": 571,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:15.788200",
+    "density": 0.793,
+    "people": 573,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:16.554457",
+    "density": 0.789,
+    "people": 573,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:17.478222",
+    "density": 0.786,
+    "people": 580,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:18.251045",
+    "density": 0.784,
+    "people": 584,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:19.291627",
+    "density": 0.782,
+    "people": 587,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:20.387012",
+    "density": 0.781,
+    "people": 589,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:21.300469",
+    "density": 0.78,
+    "people": 592,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:22.116943",
+    "density": 0.781,
+    "people": 594,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:23.136847",
+    "density": 0.783,
+    "people": 596,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:24.513210",
+    "density": 0.786,
+    "people": 596,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:25.818865",
+    "density": 0.789,
+    "people": 597,
+    "stream_id": null
+  },
+  {
+    "timestamp": "2025-11-12T11:29:26.819362",
+    "density": 0.792,
+    "people": 596,
+    "stream_id": null
+  }
+]

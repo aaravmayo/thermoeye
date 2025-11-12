@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>My Streams - ThermoEye</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0f0f1e;
+      color: #e0e0e0;
+      min-height: 100vh;
+    }
+    
+    .header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      padding: 16px 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #ff6b35;
+    }
+    .header h1 {
+      font-size: 24px;
+      color: #ff6b35;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .user-info {
+      font-size: 14px;
+      color: #bdbdbd;
+    }
+    .btn-logout {
+      padding: 8px 16px;
+      background: #d32f2f;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    
+    .nav {
+      background: #16213e;
+      padding: 12px 24px;
+      display: flex;
+      gap: 16px;
+      border-bottom: 1px solid #2a2a3e;
+    }
+    .nav a {
+      color: #bdbdbd;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      transition: all 0.3s;
+    }
+    .nav a:hover {
+      background: #1a1a2e;
+      color: #ff6b35;
+    }
+    .nav a.active {
+      background: #ff6b35;
+      color: white;
+    }
+    
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    
+    .card {
+      background: linear-gradient(135deg, #1e1e3f 0%, #16213e 100%);
+      border-radius: 12px;
+      padding: 24px;
+      border: 1px solid #2a2a3e;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      margin-bottom: 24px;
+    }
+    .card h2 {
+      font-size: 20px;
+      color: #ff6b35;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 2fr 150px 120px;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    
+    .form-group {
+      margin-bottom: 16px;
+    }
+    label {
+      display: block;
+      font-size: 13px;
+      color: #bdbdbd;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    input[type="text"], select {
+      width: 100%;
+      padding: 10px;
+      background: #0f0f1e;
+      border: 2px solid #2a2a3e;
+      border-radius: 6px;
+      color: #e0e0e0;
+      font-size: 14px;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: #ff6b35;
+    }
+    
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #00c853 0%, #00e676 100%);
+      color: white;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 200, 83, 0.3);
+    }
+    .btn-danger {
+      background: linear-gradient(135deg, #d32f2f 0%, #f44336 100%);
+      color: white;
+    }
+    .btn-danger:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(211, 47, 47, 0.3);
+    }
+    
+    .streams-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 20px;
+    }
+    .stream-card {
+      background: #0f0f1e;
+      border: 2px solid #2a2a3e;
+      border-radius: 10px;
+      padding: 20px;
+      transition: all 0.3s;
+    }
+    .stream-card:hover {
+      border-color: #ff6b35;
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(255, 107, 53, 0.2);
+    }
+    .stream-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .stream-name {
+      font-size: 18px;
+      font-weight: 600;
+      color: #ff6b35;
+    }
+    .stream-type {
+      background: #424242;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      text-transform: uppercase;
+      color: #bdbdbd;
+    }
+    .stream-url {
+      font-size: 13px;
+      color: #9e9e9e;
+      margin: 8px 0;
+      word-break: break-all;
+    }
+    .stream-meta {
+      font-size: 12px;
+      color: #757575;
+      margin: 8px 0;
+    }
+    .stream-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #757575;
+    }
+    .empty-state i {
+      font-size: 64px;
+      margin-bottom: 20px;
+      opacity: 0.3;
+    }
+    
+    .alert {
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .alert-success {
+      background: rgba(0, 200, 83, 0.2);
+      border-left: 4px solid #00c853;
+      color: #69f0ae;
+    }
+    .alert-error {
+      background: rgba(211, 47, 47, 0.2);
+      border-left: 4px solid #d32f2f;
+      color: #ff5252;
+    }
+    
+    @media (max-width: 768px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>
+      <i class="fas fa-fire"></i>
+      ThermoEye Control Center
+    </h1>
+    <div class="user-menu">
+      <div class="user-info">
+        <i class="fas fa-user-circle"></i> {{ user }}
+      </div>
+      <a href="/logout">
+        <button class="btn-logout"><i class="fas fa-sign-out-alt"></i> Logout</button>
+      </a>
+    </div>
+  </div>
+  
+  <div class="nav">
+    <a href="/"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+    <a href="/streams" class="active"><i class="fas fa-video"></i> My Streams</a>
+    <a href="/alerts"><i class="fas fa-bell"></i> Alerts History</a>
+  </div>
+
+  <div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">
+            <i class="fas fa-info-circle"></i> {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <div class="card">
+      <h2><i class="fas fa-plus-circle"></i> Add New Stream</h2>
+      
+      <form action="/streams/add" method="post">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Stream Name</label>
+            <input type="text" name="name" placeholder="Front Entrance" required>
+          </div>
+          
+          <div class="form-group">
+            <label>Stream URL</label>
+            <input type="text" name="url" placeholder="rtsp://192.168.1.10:554/stream1" required>
+          </div>
+          
+          <div class="form-group">
+            <label>Protocol</label>
+            <select name="type">
+              <option value="rtsp">RTSP</option>
+              <option value="rtmp">RTMP</option>
+              <option value="http">HTTP/HTTPS</option>
+              <option value="hls">HLS (.m3u8)</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label>&nbsp;</label>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+              <i class="fas fa-save"></i> Save Stream
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2><i class="fas fa-list"></i> Saved Streams ({{ streams|length }})</h2>
+      
+      {% if streams %}
+        <div class="streams-grid">
+          {% for stream_id, stream in streams.items() %}
+            <div class="stream-card">
+              <div class="stream-header">
+                <div class="stream-name">{{ stream.name }}</div>
+                <div class="stream-type">{{ stream.type }}</div>
+              </div>
+              
+              <div class="stream-url">
+                <i class="fas fa-link"></i> {{ stream.url }}
+              </div>
+              
+              <div class="stream-meta">
+                <i class="fas fa-user"></i> {{ stream.owner }}
+                <span style="margin: 0 8px;">•</span>
+                <i class="fas fa-calendar"></i> {{ stream.created[:10] }}
+              </div>
+              
+              <div class="stream-actions">
+                <form action="/start" method="post" style="flex: 1;">
+                  <input type="hidden" name="source_type" value="stream">
+                  <input type="hidden" name="stream_id" value="{{ stream_id }}">
+                  <input type="hidden" name="threshold" value="45">
+                  <input type="hidden" name="opacity" value="70">
+                  <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    <i class="fas fa-play"></i> Monitor
+                  </button>
+                </form>
+                
+                <form action="/streams/delete/{{ stream_id }}" method="post">
+                  <button type="submit" class="btn btn-danger" onclick="return confirm('Delete this stream?');">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </form>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="empty-state">
+          <i class="fas fa-video-slash"></i>
+          <h3>No streams configured</h3>
+          <p>Add your first stream above to get started</p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</body>
+</html>
