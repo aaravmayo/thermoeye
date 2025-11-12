@@ -1,6 +1,7 @@
-flask==3.0.0
+flask
 opencv-python
 numpy
 pillow
 paho-mqtt
 werkzeug
+gunicorn
