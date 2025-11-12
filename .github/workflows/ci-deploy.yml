@@ -1,0 +1,160 @@
+name: CI & Deploy
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  ci:
+    name: Lint & Import Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          # optional linters (comment out if you don't want them)
+          pip install flake8
+          flake8 --ignore=E501 .
+
+      - name: Sanity import
+        run: |
+          python - <<'PY'
+          import importlib
+          for m in ["app", "engine"]:
+              importlib.import_module(m)
+          print("✅ Imports OK")
+          PY
+
+  build-and-push:
+    name: Docker Build & Push to GHCR
+    needs: ci
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract repo name (lowercase)
+        id: names
+        run: |
+          REPO="${GITHUB_REPOSITORY,,}"   # lower-case owner/repo
+          IMAGE="ghcr.io/${REPO}"
+          echo "image=${IMAGE}" >> $GITHUB_OUTPUT
+
+      - name: Set Docker metadata (tags/labels)
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ steps.names.outputs.image }}
+          tags: |
+            type=sha
+            type=raw,value=latest
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+  deploy-ssh:
+    name: Optional SSH Deploy (VPS / VM)
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    if: ${{ secrets.DEPLOY_HOST && secrets.DEPLOY_USER && secrets.DEPLOY_SSH_KEY }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Compose image name
+        id: names
+        run: |
+          REPO="${GITHUB_REPOSITORY,,}"
+          IMAGE="ghcr.io/${REPO}:latest"
+          echo "image=${IMAGE}" >> $GITHUB_OUTPUT
+          echo "container_name=thermoeye" >> $GITHUB_OUTPUT
+
+      - name: Add SSH key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
+
+      - name: Install ssh client
+        run: sudo apt-get update && sudo apt-get install -y openssh-client
+
+      - name: Deploy via SSH (docker pull & run)
+        env:
+          HOST: ${{ secrets.DEPLOY_HOST }}
+          USER: ${{ secrets.DEPLOY_USER }}
+          IMAGE: ${{ steps.names.outputs.image }}
+          CONTAINER: ${{ steps.names.outputs.container_name }}
+          PORT: ${{ secrets.DEPLOY_PORT || '22' }}
+          APP_PORT: ${{ secrets.APP_PORT || '8080' }}
+        run: |
+          ssh -o StrictHostKeyChecking=no -p "$PORT" "$USER@$HOST" bash -s <<'REMOTE'
+          set -e
+          # Login to GHCR (uses a PAT or GitHub token you store on the server)
+          if ! command -v docker &>/dev/null; then
+            echo "Docker not found; install Docker first."
+            exit 1
+          fi
+
+          echo "Pulling image: $IMAGE"
+          echo "${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+          docker pull "$IMAGE"
+
+          # Create a network (optional)
+          docker network inspect webnet >/dev/null 2>&1 || docker network create webnet
+
+          # Stop and remove old container if exists
+          if [ "$(docker ps -aq -f name=$CONTAINER)" ]; then
+            docker rm -f "$CONTAINER" || true
+          fi
+
+          # Ensure persistent dirs exist on host
+          mkdir -p ~/thermoeye-data/uploads ~/thermoeye-data/data
+
+          # Run container
+          docker run -d \
+            --name "$CONTAINER" \
+            --restart unless-stopped \
+            -p ${APP_PORT}:8080 \
+            -v ~/thermoeye-data/uploads:/app/uploads \
+            -v ~/thermoeye-data/data:/app/data \
+            --network webnet \
+            "$IMAGE"
+
+          docker ps --filter "name=$CONTAINER"
+          echo "✅ Deployed. App listening on port ${APP_PORT}."
+          REMOTE
